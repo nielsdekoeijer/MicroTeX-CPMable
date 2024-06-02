@@ -47,14 +47,18 @@ endif ()
 # copy res dir
 
 file(COPY res DESTINATION .)
-if (MSVC)
-    find_package(tinyxml2 CONFIG REQUIRED)
-    target_link_libraries(LaTeX PRIVATE tinyxml2::tinyxml2)
-else ()
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(tinyxml2 REQUIRED IMPORTED_TARGET tinyxml2)
-    target_link_libraries(LaTeX PRIVATE tinyxml2)
-endif ()
+# OLD: We dont use this shit
+# if (MSVC)
+#     find_package(tinyxml2 CONFIG REQUIRED)
+#     target_link_libraries(LaTeX PRIVATE tinyxml2::tinyxml2)
+# else ()
+#     find_package(PkgConfig REQUIRED)
+#     pkg_check_modules(tinyxml2 REQUIRED IMPORTED_TARGET tinyxml2)
+#     target_link_libraries(LaTeX PRIVATE tinyxml2)
+# endif ()
+include(cmake/CPM.cmake)
+CPMAddPackage("gh:leethomason/tinyxml2#10.0.0")
+target_link_libraries(LaTeX PRIVATE tinyxml2)
 
 # source files
 target_sources(LaTeX PRIVATE
